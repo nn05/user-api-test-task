@@ -1,1 +1,3 @@
-module.exports = require('./server/server')
+const { appRun } = require('./server/server')
+
+appRun()

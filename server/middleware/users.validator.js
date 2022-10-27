@@ -1,4 +1,6 @@
 const Validator = require('jsonschema').Validator
+const mongoose = require('mongoose')
+
 const { userValidateSchema, inquiryDetailsValidateSchema, userPatchSchema } = require('../schema/user.schema')
 
 const validate = (userData) => {
@@ -28,5 +30,16 @@ const validatePatch = (userData) => {
     return result
 }
 
+const validateUserId = (userId) => {
+    try {
+        new mongoose.Types.ObjectId(userId)
+        return true
+    }
+    catch {
+        return false
+    }
+}
+
 exports.validateUser = validate
 exports.validatePatchUser = validatePatch
+exports.validateUserId = validateUserId

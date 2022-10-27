@@ -1,5 +1,5 @@
 const express = require('express')
-const { validateUser, validatePatchUser } = require('../../middleware/users.validator')
+const { validateUser, validatePatchUser, validateUserId } = require('../../middleware/users.validator')
 const { createUserHandler,
             getUsersHandler,
             getUserHandler,
@@ -30,13 +30,25 @@ const validatePatch = (req, res, next) => {
     }
 }
 
+const validateUserIdParams = (req, res, next) => {
+    const { userId } = req.params
+    const validateResult = validateUserId(userId)
+    if (!validateUserId(userId)) {
+        res.status(400)
+        res.json('Incorrect userId')
+    }
+    else {
+        next()
+    }
+}
+
 const router = express.Router()
 
 router.get('/', async (req, res) => {
     const result = await getUsersHandler(req, res)
     res.json(result)
 })
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', validateUserIdParams, async (req, res) => {
     const result = await getUserHandler(req, res)
     res.json(result)
 })
@@ -46,17 +58,17 @@ router.post('/', validate, async (req, res) => {
     res.json(result)
 })
 
-router.put('/:userId', validate, async (req, res) => {
+router.put('/:userId', [validate, validateUserIdParams], async (req, res) => {
     const result = await updateUserHandler(req, res)
     res.json(result)
 })
 
-router.patch('/:userId', validatePatch, async (req, res) => {
+router.patch('/:userId', [validatePatch, validateUserIdParams], async (req, res) => {
     const result = await patchUserHandler(req, res)
     res.json(result)
 })
 
-router.delete('/:userId', async (req, res) => {
+router.delete('/:userId', validateUserIdParams, async (req, res) => {
     const result = await deleteUserHandler(req, res)
     res.json(result)
 })

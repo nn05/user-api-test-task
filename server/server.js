@@ -16,10 +16,15 @@ function createServer() {
     return app;
 }
 
-const port = config.PORT || 8090
-const app = createServer()
+function appRun() {
+    const port = config.PORT || 8090
+    const app = createServer()
 
-app.listen(port, async function () {
-    console.log(`Server running on ${port}`)
-    await connect()
-})
+    app.listen(port, async function () {
+        console.log(`Server running on ${port}`)
+        await connect()
+    })
+}
+
+exports.createServer = createServer
+exports.appRun = appRun
