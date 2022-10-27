@@ -1,6 +1,7 @@
 const express = require('express')
 
 const usersRouter = require('./routes/api/users')
+const logsRouter = require('./routes/api/logs')
 const config = require('./config')
 const connect = require('./utils/connect')
 
@@ -10,7 +11,8 @@ function createServer() {
     app.use(express.json())
 
     app.use('/api/v1/users', usersRouter)
-      
+    app.use('/api/v1/logs', logsRouter)
+    
     return app;
 }
 

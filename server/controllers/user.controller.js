@@ -1,5 +1,6 @@
 const { getUsers, createUser, getUser, updateUser, deleteUser } = require('../services/user.service')
 const { User } = require('../models/user.model')
+const { appendToLog } = require('../utils/logger')
 
 function setUserCalcProperties(inputData) {
     const userData = {
@@ -43,6 +44,7 @@ async function createUserHandler(req, res) {
     const userFullData = setUserCalcProperties(userData)
 
     const dbResponce = await createUser(userFullData);
+    appendToLog('Create new user', dbResponce)
     return checkDBResponce(req, res, dbResponce)
 
 }
