@@ -25,6 +25,40 @@
   ```shell
   $ yarn start
   ```
+
+## API
+
+#### users
+
+POST/PUT - Request body 
+```Shell
+{ 
+   "firstName": "string",
+   "lastName": "string",
+   "email"?: "string",
+   "homePhone"?: "string",
+   "inquiryDetails"?: "InquiryDetails = {}",
+   "interests"?: "string[]",
+   "isArchived"?: "boolean",
+   "isSpam"?: "boolean"
+}
+```
+
+```Shell
+GET /api/v1/users/ - get all users
+GET /api/v1/users/:userID - get all user 'userID'
+POST /api/v1/users/ - create new user
+PUT /api/v1/users/:userID - change user 'userID'
+PATCH /api/v1/users/:userID - update user 'userID'
+DELETE /api/v1/users/:userID - delete user 'userID'
+```
+#### logs
+
+```Shell
+GET /api/v1/logs/ - get log records
+DELETE /api/v1/logs/ - delete all logs
+```
+
 ## Command Line Commands
 
 #### Installation
